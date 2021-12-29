@@ -12,6 +12,13 @@ android {
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
+        // Shader compilation directives, put glsl shaders to app/src/main/shaders
+        // android studio will pick them up and compile them into APK/assets/shaders
+        // KNOWN ISSUE:  if shaders having errors, it takes long time for gradle to timeout
+        //               but it will eventually time out and complain about shader compiling
+        shaders {
+            glslcArgs.addAll(['-c', '-g'])
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
@@ -31,6 +38,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+
+
     externalNativeBuild {
         cmake {
             path file('src/CMakeLists.txt')
